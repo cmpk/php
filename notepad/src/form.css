@@ -1,0 +1,13 @@
+dt {
+  width: 20%;
+  float: left;
+}
+
+dd {
+  width: 80%;
+  float: left;
+}
+
+.button {
+  text-align: right;
+}

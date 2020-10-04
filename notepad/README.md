@@ -137,6 +137,23 @@
    $ ssh root@192.168.56.101
    ```
 
+1. SELinux を無効化する。  
+
+   ```
+   # setenforce 0
+   # vi /etc/selinux/config  (*1)
+   ...
+   SELINUX=disabled
+   ```
+
+   (*1) 再起動してもSELinuxが無効化されるよう設定。  
+
+   ＜メモ＞
+   SELinux を無効化しない場合、  
+   /var/www/html 配下のマウントポイントあるいはマウントポイントへのシンボリックリンクに対して  
+   SELinux 側の設定変更なしには
+   Webブラウザからアクセスできない（Forbidden が表示される）模様。  
+
 ### 2. PHP 7.4 のインストール
 
 以下のコマンドを実行してインストール。
@@ -313,47 +330,50 @@ Server built:   Apr  2 2020 13:13:23
 1. /var/www/html 配下にマウントポイントを作成する。
 
    ```
-   # mkdir /var/www/html/notepad
+   $ mkdir /var/www/html/notepad
    ```
 
 1. 共有フォルダを一般ユーザがアクセスできるパーミッションでマウントする。
 
    ```
-   # mount -t vboxsf -o uid=$(id apache -u),gid=$(id php -g),fmode=0664,dmode=0775 src /var/www/html/notepad
-   # ls -ld /var/www/html/notepad
+   $ sudo mount -t vboxsf -o uid=$(id apache -u),gid=$(id php -g),fmode=0664,dmode=0775 src /var/www/html/notepad
+   $ ls -ld /var/www/html/notepad
    drwxrwxr-x. 1 apache users 102 10月  3 15:58 /var/www/html/notepad
    ```
    src は自分の環境で設定した共有フォルダ名。
 
-1. 再起動後も自動でマウントされるようにする。  
-   **これを設定すると、再起動時にマウントが失敗して CentOS を起動できない（未解決）。**
+1. 再起動後も自動でマウントされるように...ならない！**（未解決）**。  
 
    ```
-   # vi /etc/fstab
+   $ sudo vi /etc/fstab
    ...
    src /var/www/html/notepad vboxsf defaults,uid=48,gid=100,fmode=0664,dmode=0775 0 0
-   # umount /var/www/html/notepad
-   # mount -a
-   # df -hT
+   $ sudo umount /var/www/html/notepad
+   $ sudo mount -a
+   $ df -hT
    ...
    src                     vboxsf     931G  177G  755G   19% /var/www/html/notepad
    ```
    uid と gid は環境によって値が異なる。
+
+   ＜メモ＞  
+   再起動してマウントが失敗し、CentOS ごと起動しなかった。   
+   SELinux 無効化後は、CentOS が起動したが、上記の自動マウントはされなかった。  
 
 #### 4-3. Apache HTTP Service の自動起動
 
 1. 現在の設定を確認。
 
    ```
-   # systemctl list-unit-files -t service | grep httpd
+   $ sudo systemctl list-unit-files -t service | grep httpd
    httpd.service                                 disabled
    ```
 
 1. 自動起動を ON にする。
 
    ```
-   # systemctl enable httpd.service
-   # systemctl list-unit-files -t service | grep httpd
+   $ sudo systemctl enable httpd.service
+   $ sudo systemctl list-unit-files -t service | grep httpd
    httpd.service                                 enabled 
    ```
 
@@ -361,3 +381,6 @@ Server built:   Apr  2 2020 13:13:23
 
 **ここから未実施**
 
+## 参考サイト
+
+[【プログラミング構築】入力したデータをPOST送信でデータベースに登録しよう](https://liginc.co.jp/272916)
