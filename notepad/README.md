@@ -32,7 +32,8 @@
 
 ### データベース
 
-- MySQL
+- MariaDB 10.5.6
+  - 2020/10/03 時点の最新。
 
 ## 環境構築
 
@@ -381,9 +382,61 @@ Server built:   Apr  2 2020 13:13:23
    httpd.service                                 enabled 
    ```
 
-### MySQL
+### MariaDB
 
-**ここから未実施**
+1. バージョンを指定してインストールするため、yumリポジトリの設定ファイルを書き換えてインストールする。  
+    公式サイト[Installing MariaDB with yum/dnf](https://mariadb.com/kb/en/yum/#pinning-the-mariadb-repository-to-a-specific-minor-release)
+
+   ```
+   $ curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
+   $ sudo vi /etc/yum.repos.d/MariaDB.repo
+   [mariadb]
+   name = MariaDB-10.5.6
+   baseurl=http://yum.mariadb.org/10.5.6/centos/7/x86_64
+   gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+   gpgcheck=1
+   $ sudo yum clean all
+   $ sudo rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+   $ sudo yum install -y MariaDB-server galera-4 MariaDB-client MariaDB-shared MariaDB-backup MariaDB-common
+   ```
+
+1. 日本語と4byte文字列を扱えるよう、文字コードの設定を追加する。  
+
+   ```
+   $ sudo vi /etc/my.cnf.d/server.cnf 
+   [mariadb]
+   character-set-server=utf8mb4
+   ```
+
+   参考：[MySQL で utf8 と utf8mb4 の混在で起きること](https://tmtms.hatenablog.com/entry/2016/09/06/mysql-utf8)
+
+1. MariaDB の自動起動を有効化して、起動する。  
+
+   ```
+   $ sudo systemctl enable mariadb
+   $ sudo systemctl start mariadb
+   ```
+
+1. mysql コマンドを実行して MariaDB に入れることを確認する。  
+   ついでに設定した文字コードを確認する。  
+
+   ```
+   $ mysql
+   > show variables like 'char%';
+   +--------------------------+----------------------------+
+   | Variable_name            | Value                      |
+   +--------------------------+----------------------------+
+   | character_set_client     | utf8                       |
+   | character_set_connection | utf8                       |
+   | character_set_database   | utf8mb4                    |
+   | character_set_filesystem | binary                     |
+   | character_set_results    | utf8                       |
+   | character_set_server     | utf8mb4                    |
+   | character_set_system     | utf8                       |
+   | character_sets_dir       | /usr/share/mysql/charsets/ |
+   +--------------------------+----------------------------+
+   8 rows in set (0.001 sec)
+   ```
 
 ## 参考サイト
 
