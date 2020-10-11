@@ -1,0 +1,84 @@
+form, dl, div {
+  overflow: auto;
+}
+
+/* beginning_message */
+#beginning_message {
+  margin-bottom: 30px;
+}
+
+#beginning_error_message {
+  display: none;
+  text-align: right;
+  color:red;
+}
+
+/* form */
+dt {
+  width: 20%;
+  margin-bottom: 30px;
+  line-height: normal; /* disable bootstrap */
+  float: left;
+}
+
+dd {
+  width: 80%;
+  margin-bottom: 20px;
+  line-height: normal; /* disable bootstrap */
+  float: left;
+}
+
+dd.required > div:after {
+  content: '*入力必須';
+  display: block;
+  color: #f00;
+  font-weight: normal;
+  font-size: x-small;
+  margin-right: 10px;
+}
+
+dd select {
+  width: 100%;
+}
+
+dd input[type='text'] {
+  width: 100%;
+}
+
+.radio_group > div {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.radio_group > div > input[type='radio'] {
+  margin-right: 10px;
+}
+
+dd textarea {
+  width: 100%;
+  min-height: 200px;
+}
+
+.button {
+  text-align: right;
+}
+
+/* validation */
+label.error {
+  display: block;
+  text-align: right;
+  color: red;
+  font-weight: x-small;
+}
+
+dd select.error {
+  background-color: #fee;
+}
+
+dd input[type='text'].error {
+  background-color: #fee;
+}
+
+div.error {
+  background-color: #fee;
+}

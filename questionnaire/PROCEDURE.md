@@ -44,7 +44,7 @@
 
    | 項目 | 設定値 | 備考 |
    | ---- | -------| ---- |
-   | 名前   | CentOS7.8.2003_LAMP_notepad | 任意の値 |
+   | 名前   | CentOS7.8.2003_LAMP_questionnaire | 任意の値 |
    | タイプ | Linux | |
    | バージョン   | Red Hat (64-bit) | |
    | メモリサイズ | 2048 MB          | デフォルト1024MBだと遅いので増加させた |
@@ -54,7 +54,7 @@
 
    | 項目 | 設定値 | 備考 |
    | ---- | -------| ---- |
-   | ファイルの場所 | CentOS7.8.2003_LAMP_notepad   | デフォルト値 |
+   | ファイルの場所 | CentOS7.8.2003_LAMP_questionnaire | デフォルト値 |
    | ファイルサイズ | 8.00 GB                       | デフォルト値 |
    | ハードディスクのファイルタイプ | VDI           | デフォルト値 |
    | 物理ファイルにあるファイルディスクのストレージ | 固定サイズ | デフォルト値（可変サイズ）だと遅かったので、高速化させたい。 |
@@ -329,15 +329,15 @@ Server built:   Apr  2 2020 13:13:23
 1. /var/www/html 配下にマウントポイントを作成する。
 
    ```
-   $ mkdir /var/www/html/notepad
+   $ mkdir /var/www/html/questionnaire
    ```
 
 1. 共有フォルダを一般ユーザがアクセスできるパーミッションでマウントする。
 
    ```
-   $ sudo mount -t vboxsf -o uid=$(id apache -u),gid=$(id php -g),fmode=0664,dmode=0775 src /var/www/html/notepad
-   $ ls -ld /var/www/html/notepad
-   drwxrwxr-x. 1 apache users 102 10月  3 15:58 /var/www/html/notepad
+   $ sudo mount -t vboxsf -o uid=$(id apache -u),gid=$(id php -g),fmode=0664,dmode=0775 src /var/www/html/questionnaire
+   $ ls -ld /var/www/html/questionnaire
+   drwxrwxr-x. 1 apache users 102 10月  3 15:58 /var/www/html/questionnaire
    ```
    src は自分の環境で設定した共有フォルダ名。
 
@@ -346,12 +346,12 @@ Server built:   Apr  2 2020 13:13:23
    ```
    $ sudo vi /etc/fstab
    ...
-   src /var/www/html/notepad vboxsf defaults,uid=48,gid=100,fmode=0664,dmode=0775 0 0
-   $ sudo umount /var/www/html/notepad
+   src /var/www/html/questionnaire vboxsf defaults,uid=48,gid=100,fmode=0664,dmode=0775 0 0
+   $ sudo umount /var/www/html/questionnaire
    $ sudo mount -a
    $ df -hT
    ...
-   src                     vboxsf     931G  177G  755G   19% /var/www/html/notepad
+   src                     vboxsf     931G  177G  755G   19% /var/www/html/questionnaire
    ```
    uid と gid は環境によって値が異なる。
 
