@@ -11,6 +11,10 @@
 - アンケートに答える
 - アンケート結果をダウンロードする
 
+## 画面遷移
+
+
+
 ## 環境
 
 環境構築手順は [PROCEDURE.md](PROCEDURE.md) を参照 。  
@@ -46,7 +50,7 @@
 | ---------- | ------------------- | ----- | ---------| ---- |
 | id         | int(10) unsigned    | YES   | YES      | AUTO INCREMENT |
 | shop_id    | int(10) unsigned    | -     | YES      | 外部キー：shops.id |
-| order      | varchar(50)         | -     | YES      | |
+| item       | varchar(50)         | -     | YES      | |
 | flavour    | tinyint(1) unsigned | -     | YES      | 1: 悪い、3: 普通、5: 良い |
 | opinion    | varchar(500)        | -     | -        | |
 | created_at | timestamp           | -     | YES      | デフォルトで現在日時を設定 |

@@ -38,11 +38,16 @@ $(function(){
 });
 
 $('#questionnaire').submit(function(){
+    // 連打禁止
+    $('#saver').prop('disabled', true);
+
+
     var is_valid = $('#questionnaire').valid();
     if (is_valid) {
         return true;
     }
 
     $('#beginning_error_message').css('display', 'block');
+    $('#saver').prop('disabled', false);
     return false;
 });

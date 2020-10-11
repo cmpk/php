@@ -1,17 +1,44 @@
 <?php
-  require('pdo.php');
+  require('functions.php');
   $shops = [];
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // フォームから登録された
+    $shop_id = trim($_POST['shop']);
+    $item = trim($_POST['item']);
+    $flavour = trim($_POST['flavour']);
+    $opinion = trim($_POST['opinion']);
+    
+    // 登録
+    try {
+      $pdo = create_pdo();
+      $sql = 'INSERT INTO questionnaires (shop_id, item, flavour, opinion) VALUES (:shop_id, :item, :flavour, :opinion)';
+      $stmt = $pdo->prepare($sql);
+      $params = array(':shop_id'=>$shop_id, ':item'=>$item, ':flavour'=>$flavour, ':opinion'=>$opinion);
+      $stmt->execute($params);
+    } catch (PDOException $e) {
+      // エラーが発生した場合は「500 Internal Server Error」を表示する。
+      error_log($e->getMessage());
+      http_response_code(500);
+      include_once('./error.html');
+      exit(); 
+    }
 
-  try {
-    $pdo = create_pdo();
-    $sql = 'SELECT id, name FROM shops';
-    $shops = $pdo->query($sql);
-  } catch (PDOException $e) {
-    // エラーが発生した場合は「500 Internal Server Error」を表示する。
-    error_log($e->getMessage());
-    http_response_code(500);
-    include_once('./error.html');
-    exit(); 
+    header('Location:./save.html');
+    exit();
+  }
+  else {
+    // フォームの表示
+    try {
+      $pdo = create_pdo();
+      $sql = 'SELECT id, name FROM shops';
+      $shops = $pdo->query($sql);
+    } catch (PDOException $e) {
+      // エラーが発生した場合は「500 Internal Server Error」を表示する。
+      error_log($e->getMessage());
+      http_response_code(500);
+      include_once('./error.html');
+      exit(); 
+    }
   }
 ?>
 
@@ -52,7 +79,7 @@
   エラーがあります。入力内容を修正してください。
 </div>
 
-<form id="questionnaire" action="./save.php" method="post">
+<form id="questionnaire" action="./create.php" method="post">
   <div>
     <dl>
       <div>
@@ -94,7 +121,7 @@
   </div>
 
   <div class="button">
-    <input type="submit" value="登録" />
+    <input id="saver" type="submit" value="登録" />
   </div>
 </form>
 

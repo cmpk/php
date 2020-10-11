@@ -1,21 +1,3 @@
-<?php
-  $shop_id = $_POST['shop'];
-  $item = $_POST['item'];
-  $flavour = $_POST['flavour'];
-  $opinion = $_POST['opinion'];
-
-  require('pdo.php');
-  try {
-    $pdo = create_pdo();
-  } catch (PDOException $e) {
-    // エラーが発生した場合は「500 Internal Server Error」を表示する。
-    error_log($e->getMessage());
-    http_response_code(500);
-    include_once('./error.html');
-    exit(); 
-  }
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
