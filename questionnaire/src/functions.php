@@ -12,4 +12,14 @@ function create_pdo() {
 
     return $pdo;
 }
+
+function is_nullempty($val) {
+    if (is_null($val)) {
+        return true;
+    }
+    if ($val === '') {
+        return true;
+    }
+    return false;
+}
 ?>

@@ -1,20 +1,50 @@
 <?php
   require('functions.php');
   $shops = [];
+  $is_invalid = false;
+  $is_shop_invalid = false;
+  $is_flavour_invalid = false;
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // フォームから登録された
     $shop_id = trim($_POST['shop']);
     $item = trim($_POST['item']);
     $flavour = trim($_POST['flavour']);
     $opinion = trim($_POST['opinion']);
-    
-    // 登録
+
+    // 必須チェック
+    if (is_nullempty($shop_id) || is_nullempty($item) || is_nullempty($flavour)) {
+      $is_invalid = true;
+    }
+
     try {
       $pdo = create_pdo();
-      $sql = 'INSERT INTO questionnaires (shop_id, item, flavour, opinion) VALUES (:shop_id, :item, :flavour, :opinion)';
+
+      // 値の妥当性チェック
+      $sql = 'SELECT count(id) As cnt FROM shops WHERE id=:id';
       $stmt = $pdo->prepare($sql);
-      $params = array(':shop_id'=>$shop_id, ':item'=>$item, ':flavour'=>$flavour, ':opinion'=>$opinion);
-      $stmt->execute($params);
+      $stmt->bindValue(':id', $shop_id, PDO::PARAM_INT);
+      $stmt->execute();
+      foreach($stmt as $rec) {
+        if ($rec['cnt'] == 0) {
+          $is_shop_invalid = true;
+        }
+      }
+      
+      if ($flavour != 1 && $flavour != 3 && $flavour != 5) {
+        $is_flavour_invalid = true;
+      }
+
+      // 登録
+      if (!$is_invalid && !$is_shop_invalid && !$is_flavour_invalid) {
+        $sql = 'INSERT INTO questionnaires (shop_id, item, flavour, opinion) VALUES (:shop_id, :item, :flavour, :opinion)';
+        $stmt = $pdo->prepare($sql);
+        $params = array(':shop_id'=>$shop_id, ':item'=>$item, ':flavour'=>$flavour, ':opinion'=>$opinion);
+        $stmt->execute($params);
+
+        header('Location:./save.html');
+        exit();
+      }
+      
     } catch (PDOException $e) {
       // エラーが発生した場合は「500 Internal Server Error」を表示する。
       error_log($e->getMessage());
@@ -22,9 +52,6 @@
       include_once('./error.html');
       exit(); 
     }
-
-    header('Location:./save.html');
-    exit();
   }
   else {
     // フォームの表示
