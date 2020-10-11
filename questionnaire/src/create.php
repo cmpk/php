@@ -20,27 +20,12 @@
       $pdo = create_pdo();
 
       // 値の妥当性チェック
-      $sql = 'SELECT count(id) As cnt FROM shops WHERE id=:id';
-      $stmt = $pdo->prepare($sql);
-      $stmt->bindValue(':id', $shop_id, PDO::PARAM_INT);
-      $stmt->execute();
-      foreach($stmt as $rec) {
-        if ($rec['cnt'] == 0) {
-          $is_shop_invalid = true;
-        }
-      }
-      
-      if ($flavour != 1 && $flavour != 3 && $flavour != 5) {
-        $is_flavour_invalid = true;
-      }
+      $is_shop_invalid = !is_shop_id_valid($pdo, $shop_id);
+      $is_flavour_invalid = !is_flavour_valid($flavour);
 
       // 登録
       if (!$is_invalid && !$is_shop_invalid && !$is_flavour_invalid) {
-        $sql = 'INSERT INTO questionnaires (shop_id, item, flavour, opinion) VALUES (:shop_id, :item, :flavour, :opinion)';
-        $stmt = $pdo->prepare($sql);
-        $params = array(':shop_id'=>$shop_id, ':item'=>$item, ':flavour'=>$flavour, ':opinion'=>$opinion);
-        $stmt->execute($params);
-
+        save($pdo, $shop_id, $item, $flavour, $opinion);
         header('Location:./save.html');
         exit();
       }
@@ -53,19 +38,18 @@
       exit(); 
     }
   }
-  else {
-    // フォームの表示
-    try {
-      $pdo = create_pdo();
-      $sql = 'SELECT id, name FROM shops';
-      $shops = $pdo->query($sql);
-    } catch (PDOException $e) {
-      // エラーが発生した場合は「500 Internal Server Error」を表示する。
-      error_log($e->getMessage());
-      http_response_code(500);
-      include_once('./error.html');
-      exit(); 
-    }
+  
+  // フォームの表示
+  try {
+    $pdo = create_pdo();
+    $sql = 'SELECT id, name FROM shops';
+    $shops = $pdo->query($sql);
+  } catch (PDOException $e) {
+    // エラーが発生した場合は「500 Internal Server Error」を表示する。
+    error_log($e->getMessage());
+    http_response_code(500);
+    include_once('./error.html');
+    exit(); 
   }
 ?>
 
@@ -90,6 +74,17 @@
 </head>
 <title>アンケートフォーム</title>
 <body>
+<script type="text/javascript">
+if (<?php echo($is_invalid ? 'true' : 'false') ?>) {
+  $('#questionnaire').valid();
+}
+if (<?php echo($is_shop_invalid ? 'true' : 'false') ?>) {
+  console.log('shop is invalid');
+}
+if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
+  console.log('flavour is invalid');
+}
+</script>
 <div id="wrapper">
 <div id="container">
 
@@ -117,7 +112,7 @@
               <option value="" selected></option>
               <?php
                 foreach ($shops as $shop) {
-                  echo "<option value='$shop[id]'>$shop[name]</option>";
+                  echo("<option value='$shop[id]'>$shop[name]</option>");
                 }
               ?>
             </select>
