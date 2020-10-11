@@ -16,6 +16,7 @@
 
 - PHP 7.4.11
   - 2020/10/03 時点の最新
+  - PDO 利用
 
 ### Webサーバ
 
@@ -161,12 +162,14 @@
 # yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 # yum install -y yum-utils
 # yum-config-manager --enable remi-php74
-# yum install -y php74 php74-php
+# yum install -y php74 php74-php php74-php-pdo php74-php-mysqlnd    (*1)
 # php74 -v
 PHP 7.4.11 (cli) (built: Sep 29 2020 10:17:06) ( NTS )
 Copyright (c) The PHP Group
 Zend Engine v3.4.0, Copyright (c) Zend Technologies
 ```
+
+(*1) *-pdo, *-mysqlnd は PDO を使用するために必要。
 
 ### 3. Apache 設定
 
@@ -376,7 +379,7 @@ Server built:   Apr  2 2020 13:13:23
    httpd.service                                 enabled 
    ```
 
-### MariaDB インストール
+### 5. MariaDB インストール
 
 1. バージョンを指定してインストールするため、yumリポジトリの設定ファイルを書き換えてインストールする。  
     公式サイト[Installing MariaDB with yum/dnf](https://mariadb.com/kb/en/yum/#pinning-the-mariadb-repository-to-a-specific-minor-release)
@@ -436,7 +439,7 @@ Server built:   Apr  2 2020 13:13:23
    大文字小文字を区別するため、比較方法はバイナリとする。  
 
    ```
-   > CREATE DATABASE questionnaire COLLATE utf8_bin;
+   > CREATE DATABASE questionnaire COLLATE utf8mb4_bin;
    > CREATE USER php@localhost;
    > GRANT all ON questionnaire.* TO php@localhost;
    > FLUSH PRIVILEGES;

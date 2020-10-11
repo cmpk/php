@@ -27,6 +27,14 @@ $(function(){
             }
         }
     });
+
+    //**-- ユーザ操作に伴うアクション --*/
+    $('input:radio').each(function(){
+        $(this).change(function(){
+            $obj = $(this).parents('.radio_group');
+            $obj.removeClass('error');
+        });
+    });
 });
 
 $('#questionnaire').submit(function(){

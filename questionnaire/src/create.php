@@ -1,3 +1,20 @@
+<?php
+  require('pdo.php');
+  $shops = [];
+
+  try {
+    $pdo = create_pdo();
+    $sql = 'SELECT id, name FROM shops';
+    $shops = $pdo->query($sql);
+  } catch (PDOException $e) {
+    // エラーが発生した場合は「500 Internal Server Error」を表示する。
+    error_log($e->getMessage());
+    http_response_code(500);
+    include_once('./error.html');
+    exit(); 
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +52,7 @@
   エラーがあります。入力内容を修正してください。
 </div>
 
-<form id="questionnaire" action="./save.html" method="post">
+<form id="questionnaire" action="./save.php" method="post">
   <div>
     <dl>
       <div>
@@ -44,8 +61,11 @@
           <div>
             <select id="shop" name="shop">
               <option value="" selected></option>
-              <option value="0">東京店</option>
-              <option value="1">大阪店</option>
+              <?php
+                foreach ($shops as $shop) {
+                  echo "<option value='$shop[id]'>$shop[name]</option>";
+                }
+              ?>
             </select>
           </div>
         </dd>
@@ -59,9 +79,9 @@
         <dd class="required">
           <div>
             <div class="radio_group">
-              <div><input type="radio" id="flavour" name="flavour" value="0" />悪い</div>
-              <div><input type="radio" id="flavour" name="flavour" value="0" />普通</div>
-              <div><input type="radio" id="flavour" name="flavour" value="0" />良い</div>
+              <div><input type="radio" id="flavour" name="flavour" value="1" />悪い</div>
+              <div><input type="radio" id="flavour" name="flavour" value="3" />普通</div>
+              <div><input type="radio" id="flavour" name="flavour" value="5" />良い</div>
             </div>
           </div>
         </dd>
