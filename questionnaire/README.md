@@ -15,26 +15,12 @@
 
 環境構築手順は [PROCEDURE.md](PROCEDURE.md) を参照 。  
 
-### 開発環境
-
 - Mac 10.13.6（ホストOS）
 - Virtual Box 5.2.6
 - CentOS 7.8.2003（ゲストOS）
-
-### 開発言語
-
-- PHP 7.4.11
-
-### Webサーバ
-
 - Apache HTTP Server 2.4.6
-
-### データベース
-
+- PHP 7.4.11
 - MariaDB 10.5.6
-
-### ライブラリなど
-
 - JavaScript
   - jQuery
   - jQuery Validation Plugin
@@ -43,5 +29,26 @@
 
 ## テーブル構成
 
+### shops
+
+| 物理名      | データ型          | 主キー | NOT NULL | 備考 |
+| ---------- | ---------------- | ----- | ---------| ---- |
+| id         | int(10) unsigned | YES   | YES      | AUTO INCREMENT |
+| name       | varchar(50)      | -     | YES      | UNIQUE |
+| is_enabled | boolean          | -     | YES      | |
+| created_at | timestamp        | -     | YES      | デフォルトで現在日時を設定 |
+| uodated_at | timestamp        | -     | YES      | デフォルトで現在日時を設定 |
+
+### questionnaire
+
+| 物理名      | データ型             | 主キー | NOT NULL | 備考 |
+| ---------- | ------------------- | ----- | ---------| ---- |
+| id         | int(10) unsigned    | YES   | YES      | AUTO INCREMENT |
+| shop_id    | int(10) unsigned    | -     | YES      | 外部キー：shops.id |
+| order      | varchar(50)         | -     | YES      | |
+| flavour    | tinyint(1) unsigned | -     | YES      | 1: 悪い、3: 普通、5: 良い |
+| opinion    | varchar(500)        | -     | -        | |
+| created_at | timestamp           | -     | YES      | デフォルトで現在日時を設定 |
+| uodated_at | timestamp           | -     | YES      | デフォルトで現在日時を設定 |
 
 **作成中**

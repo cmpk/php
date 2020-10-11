@@ -415,8 +415,8 @@ Server built:   Apr  2 2020 13:13:23
    ついでに設定した文字コードを確認する。  
 
    ```
-   $ mysql
-   > show variables like 'char%';
+   $ sudo mysql -u root -h localhost
+   > SHOW variables LIKE 'char%';
    +--------------------------+----------------------------+
    | Variable_name            | Value                      |
    +--------------------------+----------------------------+
@@ -430,4 +430,23 @@ Server built:   Apr  2 2020 13:13:23
    | character_sets_dir       | /usr/share/mysql/charsets/ |
    +--------------------------+----------------------------+
    8 rows in set (0.001 sec)
+   ```
+
+1. DBとユーザーを作成する。 
+   大文字小文字を区別するため、比較方法はバイナリとする。  
+
+   ```
+   > CREATE DATABASE questionnaire COLLATE utf8_bin;
+   > CREATE USER php@localhost;
+   > GRANT all ON questionnaire.* TO php@localhost;
+   > FLUSH PRIVILEGES;
+   ```
+
+1. 作成したユーザーでDBの内容を閲覧できることを確認する。
+
+   ```
+   > quit;
+   $ mysql -u php -h localhost
+   > use questionnaire;
+   > show tables;
    ```

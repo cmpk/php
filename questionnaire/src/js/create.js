@@ -1,0 +1,40 @@
+$(function(){
+    //**-- jQuery Validation Plugin --**/
+    // 標準エラーメッセージの変更
+    $.extend($.validator.messages, {
+        required: '入力してください。'
+    });
+
+    $('#questionnaire').validate({
+        // 検証ルール定義
+        rules: {
+            shop: {required: true},
+            item: {required: true},
+            flavour: {required: true}
+        },
+
+        // エラーメッセージ出力箇所調整
+        errorPlacement: function(error, element) {
+            if (element.is(':radio')) {
+                error.appendTo(element.parents('.required'));
+
+                // ラジオボタンの場合は、ラジオボタンではなく親要素のスタイルを変更する
+                $(element).parents('.radio_group').addClass('error');
+            }
+            else {
+                // 入力フォームの後ろでなく、入力フォームを囲う要素の後ろにエラーメッセージを追加する
+                error.appendTo(element.parent().parent());
+            }
+        }
+    });
+});
+
+$('#questionnaire').submit(function(){
+    var is_valid = $('#questionnaire').valid();
+    if (is_valid) {
+        return true;
+    }
+
+    $('#beginning_error_message').css('display', 'block');
+    return false;
+});
