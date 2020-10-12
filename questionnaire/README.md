@@ -14,7 +14,7 @@
 
 ## 画面遷移
 
-![画面遷移図](diagram.png)
+<img src='diagram.png' alt='画面遷移図' style='max-width: 500px' />
 
 ## 環境
 
