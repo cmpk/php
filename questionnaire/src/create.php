@@ -1,15 +1,18 @@
 <?php
   require('functions.php');
+
+  $shop_id = isset($_POST['shop']) ? trim($_POST['shop']) : null;
+  $item = isset($_POST['item']) ? trim($_POST['item']) : null;
+  $flavour = isset($_POST['flavour']) ? trim($_POST['flavour']) : null;
+  $opinion = isset($_POST['opinion']) ? trim($_POST['opinion']) : null;
+
   $shops = [];
   $is_invalid = false;
   $is_shop_invalid = false;
   $is_flavour_invalid = false;
+
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // フォームから登録された
-    $shop_id = trim($_POST['shop']);
-    $item = trim($_POST['item']);
-    $flavour = trim($_POST['flavour']);
-    $opinion = trim($_POST['opinion']);
+    //*-- フォームから登録された場合 --*//
 
     // 必須チェック
     if (is_nullempty($shop_id) || is_nullempty($item) || is_nullempty($flavour)) {
@@ -76,7 +79,7 @@
 <body>
 <script type="text/javascript">
 if (<?php echo($is_invalid ? 'true' : 'false') ?>) {
-  $('#questionnaire').valid();
+  validate();
 }
 if (<?php echo($is_shop_invalid ? 'true' : 'false') ?>) {
   console.log('shop is invalid');
@@ -88,7 +91,7 @@ if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
 <div id="wrapper">
 <div id="container">
 
-<h1>アンケートフォーム</h1>
+<h1>アンケート - 登録</h1>
 
 <div id="beginning_message">
   当レストランにご来店いただき、誠にありがとうございました。<br />
@@ -112,7 +115,12 @@ if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
               <option value="" selected></option>
               <?php
                 foreach ($shops as $shop) {
-                  echo("<option value='$shop[id]'>$shop[name]</option>");
+                  if ($shop_id === $shop[id]) {
+                    echo("<option value='$shop[id]' selected>$shop[name]</option>");
+                  }
+                  else {
+                    echo("<option value='$shop[id]'>$shop[name]</option>");
+                  }
                 }
               ?>
             </select>
@@ -121,23 +129,23 @@ if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
       </div>
       <div>
         <dt><div><label for="item">ご注文いただいたメニュー</label></div></dt>
-        <dd class="required"><div><input type="text" id="item" name="item" maxlength="50" /></div></dd>
+        <dd class="required"><div><input type="text" id="item" name="item" maxlength="50" value="<?php echo($item)?>" /></div></dd>
       </div>
       <div>
         <dt><div><label for="flavour">味のバランス</label></div></dt>
         <dd class="required">
           <div>
             <div class="radio_group">
-              <div><input type="radio" id="flavour" name="flavour" value="1" />悪い</div>
-              <div><input type="radio" id="flavour" name="flavour" value="3" />普通</div>
-              <div><input type="radio" id="flavour" name="flavour" value="5" />良い</div>
+              <div><input type="radio" id="flavour" name="flavour" value="1" <?php echo($flavour === 1 ? 'checked="checked"' : '')?>/>悪い</div>
+              <div><input type="radio" id="flavour" name="flavour" value="3" <?php echo($flavour === 3 ? 'checked="checked"' : '')?>/>普通</div>
+              <div><input type="radio" id="flavour" name="flavour" value="5" <?php echo($flavour === 5 ? 'checked="checked"' : '')?>/>良い</div>
             </div>
           </div>
         </dd>
       </div>
       <div>
         <dt><div><label for="opinion">ご意見</label></div></dt>
-        <dd><div><textarea id="opinion" name="opinion" maxlength="500"></textarea></div></dd>
+        <dd><div><textarea id="opinion" name="opinion" maxlength="500"><?php echo($opinion)?></textarea></div></dd>
       </div>
     </dl>
   </div>

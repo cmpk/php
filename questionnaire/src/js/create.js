@@ -41,7 +41,10 @@ $('#questionnaire').submit(function(){
     // 連打禁止
     $('#saver').prop('disabled', true);
 
+    return validate();
+});
 
+function validate() {
     var is_valid = $('#questionnaire').valid();
     if (is_valid) {
         return true;
@@ -50,4 +53,4 @@ $('#questionnaire').submit(function(){
     $('#beginning_error_message').css('display', 'block');
     $('#saver').prop('disabled', false);
     return false;
-});
+}
