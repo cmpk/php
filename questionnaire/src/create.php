@@ -60,6 +60,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
   <script
     src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
@@ -74,22 +75,20 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/create.css">
+  <link rel="stylesheet" href="./css/create_sp.css">
 </head>
 <title>アンケートフォーム</title>
 <body>
 <script type="text/javascript">
-if (<?php echo($is_invalid ? 'true' : 'false') ?>) {
-  validate();
-}
-if (<?php echo($is_shop_invalid ? 'true' : 'false') ?>) {
-  console.log('shop is invalid');
-}
-if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
-  console.log('flavour is invalid');
-}
+$(function(){
+  if (<?php echo($is_invalid || $is_shop_invalid || $is_flavour_invalid ? 'true' : 'false') ?>) {
+    console.log("<?php echo("flavour: $is_flavour_invalid, $flavour") ?>");
+    validate();
+  }
+});
 </script>
-<div id="wrapper">
-<div id="container">
+<div class="wrapper">
+<div class="container">
 
 <h1>アンケート - 登録</h1>
 
@@ -108,8 +107,8 @@ if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
   <div>
     <dl>
       <div>
-        <dt><div><label for="shop">店名</label></div></dt>
-        <dd class="required">
+        <dt class="required"><div><label for="shop">店名</label></div></dt>
+        <dd>
           <div>
             <select id="shop" name="shop">
               <option value="" selected></option>
@@ -128,17 +127,17 @@ if (<?php print($is_flavour_invalid ? 'true' : 'false') ?>) {
         </dd>
       </div>
       <div>
-        <dt><div><label for="item">ご注文いただいたメニュー</label></div></dt>
-        <dd class="required"><div><input type="text" id="item" name="item" maxlength="50" value="<?php echo($item)?>" /></div></dd>
+        <dt class="required"><div><label for="item">ご注文いただいたメニュー</label></div></dt>
+        <dd><div><input type="text" id="item" name="item" maxlength="50" value="<?php echo($item)?>" /></div></dd>
       </div>
       <div>
-        <dt><div><label for="flavour">味のバランス</label></div></dt>
-        <dd class="required">
+        <dt class="required"><div><label for="flavour">味のバランス</label></div></dt>
+        <dd>
           <div>
             <div class="radio_group">
-              <div><input type="radio" id="flavour" name="flavour" value="1" <?php echo($flavour === 1 ? 'checked="checked"' : '')?>/>悪い</div>
-              <div><input type="radio" id="flavour" name="flavour" value="3" <?php echo($flavour === 3 ? 'checked="checked"' : '')?>/>普通</div>
-              <div><input type="radio" id="flavour" name="flavour" value="5" <?php echo($flavour === 5 ? 'checked="checked"' : '')?>/>良い</div>
+              <div><input type="radio" id="flavour" name="flavour" value="1" <?php echo($flavour == 1 ? 'checked="checked"' : '')?>/>悪い</div>
+              <div><input type="radio" id="flavour" name="flavour" value="3" <?php echo($flavour == 3 ? 'checked="checked"' : '')?>/>普通</div>
+              <div><input type="radio" id="flavour" name="flavour" value="5" <?php echo($flavour == 5 ? 'checked="checked"' : '')?>/>良い</div>
             </div>
           </div>
         </dd>

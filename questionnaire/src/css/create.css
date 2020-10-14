@@ -30,7 +30,7 @@ dd {
   float: left;
 }
 
-dd.required > div:after {
+dt.required > div:after {
   content: '*入力必須';
   display: block;
   color: #f00;

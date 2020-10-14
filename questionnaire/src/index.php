@@ -5,6 +5,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
   <script
     src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
@@ -21,8 +22,11 @@
 </head>
 <title>アンケート</title>
 <body>
-<div id="wrapper">
-<div id="container">
+<div class="wrapper">
+<div class="container">
+
+<h1>アンケート - 登録</h1>
+
 </div>
 </div>
 </body>

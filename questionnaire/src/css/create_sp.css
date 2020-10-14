@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+@media screen and (max-width: 959px) {
+  /* 959px以下に適用されるCSS（タブレット用） */
+}
+@media screen and (max-width: 480px) {
+  /* 480px以下に適用されるCSS（スマホ用） */
+  dd, dt {
+    width: auto;
+    margin: 0;
+    clear: both;
+  }
+
+  dl > div {
+      margin-bottom: 10px;
+  }
+
+  dt.required > div:after {
+    display: inline-block;
+  }
+
+  dd {
+      width: 100%;
+  }
+
+  dd textarea {
+      min-height: 100px;
+  }
+}
