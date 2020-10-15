@@ -19,6 +19,7 @@
       $is_invalid = true;
     }
 
+    $pdo = NULL;
     try {
       $pdo = create_pdo();
 
@@ -28,13 +29,21 @@
 
       // 登録
       if (!$is_invalid && !$is_shop_invalid && !$is_flavour_invalid) {
+        $pdo->beginTransaction();
         save($pdo, $shop_id, $item, $flavour, $opinion);
+        $pdo->commit();
+
         header('Location:./save.html');
         exit();
       }
       
     } catch (PDOException $e) {
       // エラーが発生した場合は「500 Internal Server Error」を表示する。
+      if (!is_null($pdo)) {
+        $pdo->rollBack();
+      }
+      $pdo->rollBacl();
+
       error_log($e->getMessage());
       http_response_code(500);
       include_once('./error.html');
@@ -114,11 +123,13 @@ $(function(){
               <option value="" selected></option>
               <?php
                 foreach ($shops as $shop) {
-                  if ($shop_id === $shop[id]) {
-                    echo("<option value='$shop[id]' selected>$shop[name]</option>");
+                  $id = $shop['id'];
+                  $name = $shop['name'];
+                  if ($shop_id === $shop['id']) {
+                    echo("<option value='$id' selected>$name</option>");
                   }
                   else {
-                    echo("<option value='$shop[id]'>$shop[name]</option>");
+                    echo("<option value='$id'>$name</option>");
                   }
                 }
               ?>
@@ -135,9 +146,18 @@ $(function(){
         <dd>
           <div>
             <div class="radio_group">
-              <div><input type="radio" id="flavour" name="flavour" value="1" <?php echo($flavour == 1 ? 'checked="checked"' : '')?>/>悪い</div>
-              <div><input type="radio" id="flavour" name="flavour" value="3" <?php echo($flavour == 3 ? 'checked="checked"' : '')?>/>普通</div>
-              <div><input type="radio" id="flavour" name="flavour" value="5" <?php echo($flavour == 5 ? 'checked="checked"' : '')?>/>良い</div>
+              <div>
+                <input type="radio" id="flavour1" name="flavour" value="1" <?php echo($flavour == 1 ? 'checked="checked"' : '')?>/>
+                <label for="flavour1">悪い</label>
+              </div>
+              <div>
+                <input type="radio" id="flavour3" name="flavour" value="3" <?php echo($flavour == 3 ? 'checked="checked"' : '')?>/>
+                <label for="flavour3">ふつう</label>
+              </div>
+              <div>
+                <input type="radio" id="flavour5" name="flavour" value="1" <?php echo($flavour == 5 ? 'checked="checked"' : '')?>/>
+                <label for="flavour5">良い</label>
+              </div>
             </div>
           </div>
         </dd>
