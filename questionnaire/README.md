@@ -2,8 +2,6 @@
 
 **作成中**
 
-- TODO: レスポンシブ対応
-- TODO: index.php の実装
 - TODO: CSVダウンロード
 
 ## 目的
@@ -35,6 +33,7 @@
 - JavaScript
   - jQuery
   - jQuery Validation Plugin
+  - riversun / sortable-table
 - CSS
   - bootstrap
 
@@ -50,7 +49,7 @@
 | created_at | timestamp        | -     | YES      | デフォルトで現在日時を設定 |
 | uodated_at | timestamp        | -     | YES      | デフォルトで現在日時を設定 |
 
-### questionnaire
+### questionnaires
 
 | 物理名      | データ型             | 主キー | NOT NULL | 備考 |
 | ---------- | ------------------- | ----- | ---------| ---- |
@@ -80,3 +79,12 @@ $ sudo tail -f /var/log/httpd/error_log
 
 - [404エラーのページをPHPのheader関数でリダイレクトするのは間違っている](https://dev-lib.com/php-header-404-redirect/)
 - [【JavaScript】【jquery】jquery.validate.jsの基本的な使い方](https://yu-ya4.hatenablog.com/entry/2015/07/04/130627)
+- [HTMLのtableをソートする方法](https://qiita.com/riversun/items/8c59353af4f16264aedd)
+
+### そのほか
+
+構文チェック
+- Visual Studio Code に以下の拡張機能をインストール
+  - W3C Validation（HTML/CSS 構文チェック）
+  - ESLint（JavaScript 構文チェック）
+  - PHP IntelliSense（PHP 構文チェック）

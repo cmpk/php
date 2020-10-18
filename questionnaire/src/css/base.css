@@ -4,7 +4,6 @@ html, body, div, dl, dt, dd, h1, h2, form {
   margin: 0;
   padding: 0;
   float: none;
-  box-sizing: content-box; /* disable bootstrap */
 }
 
 html, body {
@@ -17,15 +16,16 @@ html, body {
   width: 90%;
   max-width: 1024px;
   margin: 0 auto;
-  padding: 10px;
   text-align: center;
   background-color: #fff;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .container {
-  padding: 10px;
+  width: 100%;
+  margin: 10px;
   text-align: left;
+  overflow: auto;
 }
 
 h1 {

@@ -19,7 +19,7 @@ $(function(){
                 error.appendTo(element.parents('.required'));
 
                 // ラジオボタンの場合は、ラジオボタンではなく親要素のスタイルを変更する
-                $(element).parents('.radio_group').addClass('error');
+                $(element).parents('.radio-group').addClass('error');
             }
             else {
                 // 入力フォームの後ろでなく、入力フォームを囲う要素の後ろにエラーメッセージを追加する
@@ -31,7 +31,7 @@ $(function(){
     //**-- ユーザ操作に伴うアクション --*/
     $('input:radio').each(function(){
         $(this).change(function(){
-            $obj = $(this).parents('.radio_group');
+            $obj = $(this).parents('.radio-group');
             $obj.removeClass('error');
         });
     });
@@ -50,7 +50,7 @@ function validate() {
         return true;
     }
 
-    $('#beginning_error_message').css('display', 'block');
+    $('#beginning-error-message').css('display', 'block');
     $('#saver').prop('disabled', false);
     return false;
 }

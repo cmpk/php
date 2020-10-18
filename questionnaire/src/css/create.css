@@ -4,18 +4,22 @@ form, dl, div {
   overflow: auto;
 }
 
-/* beginning_message */
-#beginning_message {
+/* beginning-message */
+#beginning-message {
   margin-bottom: 30px;
 }
 
-#beginning_error_message {
+#beginning-error-message {
   display: none;
   text-align: right;
   color:red;
 }
 
 /* form */
+form {
+  margin-right: 10px;
+}
+
 dt {
   width: 20%;
   margin-bottom: 30px;
@@ -40,25 +44,25 @@ dt.required > div:after {
 }
 
 dd select {
-  width: 100%;
+  width: 96%;
 }
 
 dd input[type='text'] {
-  width: 100%;
+  width: 95%;
 }
 
-.radio_group > div {
+.radio-group > div {
   display: inline-block;
   margin-right: 20px;
 }
 
-.radio_group > div > input[type='radio'] {
+.radio-group > div > input[type='radio'] {
   margin-right: 10px;
 }
 
 dd textarea {
   resize: none;
-  width: 100%;
+  width: 95%;
   min-height: 200px;
 }
 

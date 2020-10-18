@@ -66,7 +66,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
@@ -76,17 +76,13 @@
     crossorigin="anonymous"></script>
   <script
     src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
-  <script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
-  <script src="./js/create.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="./js/create.js" charset="utf-8"></script>
   <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/base_sp.css">
   <link rel="stylesheet" href="./css/create.css">
   <link rel="stylesheet" href="./css/create_sp.css">
 </head>
-<title>アンケートフォーム</title>
+<title>アンケート</title>
 <body>
 <script type="text/javascript">
 $(function(){
@@ -101,19 +97,19 @@ $(function(){
 
 <h1>アンケート - 登録</h1>
 
-<div id="beginning_message">
+<div id="beginning-message">
   当レストランにご来店いただき、誠にありがとうございました。<br />
   より良いサービスのご提供に努めて参りたいと考えておりますので、<br />
   ぜひとも以下のアンケートにご協力をいただきますよう、<br />
   よろしくお願い申し上げます。
 </div>
 
-<div id="beginning_error_message">
+<div id="beginning-error-message">
   エラーがあります。入力内容を修正してください。
 </div>
 
 <form id="questionnaire" action="./create.php" method="post">
-  <div>
+ <div>
     <dl>
       <div>
         <dt class="required"><div><label for="shop">店名</label></div></dt>
@@ -145,7 +141,7 @@ $(function(){
         <dt class="required"><div><label for="flavour">味のバランス</label></div></dt>
         <dd>
           <div>
-            <div class="radio_group">
+            <div class="radio-group">
               <div>
                 <input type="radio" id="flavour1" name="flavour" value="1" <?php echo($flavour == 1 ? 'checked="checked"' : '')?>/>
                 <label for="flavour1">悪い</label>

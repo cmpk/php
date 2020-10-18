@@ -26,4 +26,8 @@
   dd textarea {
       min-height: 100px;
   }
+
+  .radio-group > div {
+    display: block;
+  }
 }
