@@ -10,7 +10,7 @@
         'id' => $questionnaire['id'],
         'shop' => $questionnaire['shop'],
         'item' => $questionnaire['item'],
-        'flavour' => $questionnaire['flavour'],
+        'flavour' => convertToJapanese($questionnaire['flavour']),
         'opinion' => $questionnaire['opinion']
       );
     }
@@ -21,6 +21,15 @@
     include_once('./error.html');
     exit(); 
   }
+
+  function convertToJapanese(int $val) {
+    switch($val) {
+      case 1: return '悪い';
+      case 3: return 'ふつう';
+      case 5: return '良い';
+    }
+    return '';
+  }
 ?>
 
 <!DOCTYPE html>
@@ -29,8 +38,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
   <script
-    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@riversun/sortable-table/lib/sortable-table.js"></script>
   <script src="./js/index.js" charset="utf-8"></script>
@@ -53,7 +62,7 @@
 <h1>アンケート</h1>
 
 <div class="actions">
-  <button>CSVダウンロード</button>
+  <a href="./download.php"><button>CSVダウンロード</button></a>
   <button onClick="window.open('./create.php', '_blank')">アンケート登録</button>
 </div>
 

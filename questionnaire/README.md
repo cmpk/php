@@ -1,9 +1,5 @@
 # アンケートフォーム
 
-**作成中**
-
-- TODO: CSVダウンロード
-
 ## 目的
 
 - PHP で DB 操作する
@@ -12,7 +8,8 @@
 
 ## 機能概要
 - アンケートに答える
-- アンケート結果をダウンロードする
+- アンケートの内容を一覧で表示する
+- 一覧に表示された内容をダウンロードする
 - HTMLはレスポンシブ対応
 
 ## 画面遷移
@@ -80,6 +77,8 @@ $ sudo tail -f /var/log/httpd/error_log
 - [404エラーのページをPHPのheader関数でリダイレクトするのは間違っている](https://dev-lib.com/php-header-404-redirect/)
 - [【JavaScript】【jquery】jquery.validate.jsの基本的な使い方](https://yu-ya4.hatenablog.com/entry/2015/07/04/130627)
 - [HTMLのtableをソートする方法](https://qiita.com/riversun/items/8c59353af4f16264aedd)
+- [ExcelでBOM付きが無双するPHPでのCSVの書き出し方](https://alaki.co.jp/blog/?p=1260)
+- [【jQuery】配列をCSVファイルにして、ダウンロードする方法](https://qiita.com/tsukahara-akito/items/976690c099f8f3316a7d)
 
 ### そのほか
 
