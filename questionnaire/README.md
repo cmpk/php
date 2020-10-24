@@ -16,6 +16,8 @@
 
 <img src='diagram.png' alt='画面遷移図' width='50%' />
 
+（[guiflow](https://github.com/ktama/guiflow) で作成）
+
 ## 環境
 
 環境構築手順は [PROCEDURE.md](PROCEDURE.md) を参照 。  
